@@ -1,0 +1,147 @@
+{% extends 'techBlog/base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+ 
+ <!--================ Hero sm Banner start =================-->      
+ <section class="mb-30px">
+  <div class="container">
+    <div class="hero-banner hero-banner--sm">
+      <div class="hero-banner__content">
+        <h1>Blog details</h1>
+        <nav aria-label="breadcrumb" class="banner-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Blog Details</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!--================ Hero sm Banner end =================-->    
+
+<!--================ Start Blog Post Area =================-->
+<section class="blog-post-area section-margin">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+          <div class="main_blog_details">
+              <img class="img-fluid" src="{{post.image.url}}" alt="">
+              <a href="#"><h4>{{ post.title }}</h4></a>
+              <div class="user_details">
+                <div class="float-left">
+                  <a href="#">{{post.category}}</a>
+                </div>
+                <div class="float-right mt-sm-0 mt-3">
+                  <div class="media">
+                    <div class="media-body">
+                      <h5>{{ post.author }}</h5>
+                      <p>{{ post.created_on }}</p>
+                    </div>
+                    <div class="d-flex">
+                      <img width="42" height="42" src="{{post.image.url}}" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p>{{ post.content | safe }}</p>
+             <div class="news_d_footer flex-column flex-sm-row">
+               <a href="#"><span class="align-middle mr-2"><i class="ti-heart"></i></span>Lily and 4 people like this</a>
+               <a class="justify-content-sm-center ml-sm-auto mt-sm-0 mt-2" href="#"><span class="align-middle mr-2"><i class="ti-themify-favicon"></i></span>06 Comments</a>
+               <div class="news_socail ml-sm-auto mt-sm-0 mt-2">
+             <a href="#"><i class="fab fa-facebook-f"></i></a>
+             <a href="#"><i class="fab fa-twitter"></i></a>
+             <a href="#"><i class="fab fa-dribbble"></i></a>
+             <a href="#"><i class="fab fa-behance"></i></a>
+           </div>
+             </div>
+            </div>
+        
+
+       <!-- <div class="navigation-area">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                        <div class="thumb">
+                            <a href="#"><img class="img-fluid" src="img/blog/prev.jpg" alt=""></a>
+                        </div>
+                        <div class="arrow">
+                            <a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
+                        </div>
+                        <div class="detials">
+                            <p>Prev Post</p>
+                            <a href="#"><h4>A Discount Toner</h4></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                        <div class="detials">
+                            <p>Next Post</p>
+                            <a href="#"><h4>Cartridge Is Better</h4></a>
+                        </div>
+                        <div class="arrow">
+                            <a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
+                        </div>
+                        <div class="thumb">
+                            <a href="#"><img class="img-fluid" src="img/blog/next.jpg" alt=""></a>
+                        </div>										
+                    </div>									
+                </div>
+              </div> -->
+              <div class="comments-area">
+                    <!-- comments -->
+                    {% with comments.count as total_comments %}
+                  <h4>{{ total_comments }} comments</h4>
+                  <div class="comment-list">
+                      <div class="single-comment justify-content-between d-flex">
+                          <div class="user justify-content-between d-flex">
+                              <div class="thumb">
+                                  <img src="img/blog/c1.jpg" alt="">
+                              </div>
+                            <p>
+                                {% endwith %} {% for comment in comments %}
+                            </p>
+                              <div class="desc">
+                               
+                                  <h5><a href="#">{{ comment.name }}</a></h5>
+                                  <p class="date">{{ comment.created_on }}</p>
+                                  <p class="comment">
+                                    {{ comment.body | linebreaks }}
+                                  </p>
+                              </div> 
+                             
+                          </div>
+                          <!--
+                          <div class="reply-btn">
+                                  <a href="" class="btn-reply text-uppercase">reply</a> 
+                          </div>-->
+                          {% endfor %}
+                      </div>
+                  </div>	
+                                       				
+              </div>
+              <div class="comment-form">
+                {% if new_comment %}
+                <div class="alert alert-success" role="alert">
+                  Your comment is awaiting moderation
+                </div>
+                {% else %}
+                <h3>Leave a comment</h3>
+                <form method="post" style="margin-top: 1.3em;">
+                  {{ comment_form | crispy }}
+                  {% csrf_token %}
+                  <button type="submit" class="button submit_btn">Post commment</button>
+                </form>
+                {% endif %}
+              </div>
+      </div>
+
+      <!-- Start Blog Post Siddebar -->
+      {% include 'techBlog/sidebar.html' %}
+      <!-- End Blog Post Siddebar -->
+    </div>
+</section>
+<!--================ End Blog Post Area =================-->
+
+{% endblock content %}

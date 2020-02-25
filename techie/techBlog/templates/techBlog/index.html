@@ -1,0 +1,114 @@
+{% extends 'techBlog/base.html'  %}
+
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<main class="site-main">
+  <!--================Hero Banner start =================-->  
+  <section class="mb-30px">
+    <div class="container">
+      <div class="hero-banner">
+        <div class="hero-banner__content">
+          <h3>Tours & Travels</h3>
+          <h1>Amazing Places on earth</h1>
+          <h4>December 12, 2018</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--================Hero Banner end =================-->  
+
+  <!--================ Blog slider start =================-->  
+  <section>
+    <div class="container">
+      <div class="owl-carousel owl-theme blog-slider">
+        {% for post in post_list %}
+        <div class="card blog__slide text-center">
+          <div class="blog__slide__img">
+            <img class="card-img rounded-0" src="{{ post.image.url }}" alt="">
+          </div>
+          <div class="blog__slide__content">
+            <a class="blog__slide__label" href="#">{{post.category}}</a>
+            <h3><a href="#">{{ post.title }}</a></h3>
+            <p>{{post.created_on | naturaltime }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!--================ Blog slider end =================-->  
+
+  <!--================ Start Blog Post Area =================-->
+  <section class="blog-post-area section-margin mt-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          {% for post in post_list %}
+          <div class="single-recent-blog-post">
+            <div class="thumb">
+              <img class="img-fluid" src="{{post.image.url}}" alt="">
+              <ul class="thumb-info">
+                <li><a href="#"><i class="ti-user"></i>{{ post.author }}</a></li>
+                <li><a href="#"><i class="ti-notepad"></i>{{ post.created_on}}</a></li>
+                  <!-- comments 
+                  {% with comments.count as total_comments %}
+                <li><a href="#"><i class="ti-themify-favicon"></i>{{ total_comments }} comments</a></li>
+                {% endwith %}-->
+              </ul>
+            </div>
+            <div class="details mt-20">
+              <a href="">
+                <h3>{{ post.title }}</h3>
+              </a>
+              <p class="tag-list-inline">Category: <a href="#">{{ post.category }}</a></p>
+              <p>{{post.content|slice:":200" }}</p>
+              <a class="button" href="{% url 'post_detail' post.slug  %}">Read More <i class="ti-arrow-right"></i></a>
+            </div>
+          </div>
+          {% endfor %}
+
+          {% if is_paginated %}
+          <div class="row">
+            <div class="col-lg-12">
+                <nav class="blog-pagination justify-content-center d-flex">
+                    <ul class="pagination">
+                      {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Previous">
+                                <span aria-hidden="true">
+                                    <i class="ti-angle-left"></i>
+                                </span>
+                            </a>
+                        </li>
+                      {% endif %}  
+                       
+                      {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Next">
+                                <span aria-hidden="true">
+                                    <i class="ti-angle-right"></i>
+                                </span>
+                            </a>
+                        </li>
+                      {% endif %}  
+                    </ul>
+                </nav>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Start Blog Post Siddebar -->
+        {% include 'techBlog/sidebar.html' %}
+        <!-- End Blog Post Siddebar -->
+      </div>
+     </div> 
+  </section>
+  <!--================ End Blog Post Area =================-->
+</main>
+
+{% endblock content %}
+

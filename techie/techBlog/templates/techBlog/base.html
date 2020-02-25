@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>G Blog - Home</title>
+	<link rel="icon" href="{% static 'techBlog/img/Fevicon.png' %}" type="image/png">
+
+  <link rel="stylesheet" href="{% static 'techBlog/vendors/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'techBlog/vendors/fontawesome/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'techBlog/vendors/themify-icons/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'techBlog/vendors/linericon/style.css' %}">
+  <link rel="stylesheet" href="{% static 'techBlog/vendors/owl-carousel/owl.theme.default.min.css' %}">
+  <link rel="stylesheet" href="{% static 'techBlog/vendors/owl-carousel/owl.carousel.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'techBlog/css/style.css' %}">
+</head>
+<body>
+  <!--================Header Menu Area =================-->
+  {% include 'techBlog/navbar.html' %}
+  <!--================Header Menu Area =================-->
+  
+ {% block content %}  {% endblock content %}
+
+  <!--================ Start Footer Area =================-->
+ {% include 'techBlog/footer.html' %}
+  <!--================ End Footer Area =================-->
+
+  <script src="{% static 'techBlog/vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+  <script src="{% static 'techBlog/vendors/bootstrap/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'techBlog/vendors/owl-carousel/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'techBlog/js/jquery.ajaxchimp.min.js' %}"></script>
+  <script src="{% static 'techBlog/js/mail-script.js' %}"></script>
+  <script src="{% static 'techBlog/js/main.js' %}"></script>
+</body>
+</html>
