@@ -3,6 +3,8 @@
 {% load static %}
 {% load humanize %}
 
+{% block title %} G Blog - Home {% endblock %}
+
 {% block content %}
 
 <main class="site-main">
@@ -11,9 +13,9 @@
     <div class="container">
       <div class="hero-banner">
         <div class="hero-banner__content">
-          <h3>Tours & Travels</h3>
-          <h1>Amazing Places on earth</h1>
-          <h4>December 12, 2018</h4>
+          <h3>The Future</h3>
+          <h1>Exploring Technology to the Core</h1>
+          <h4>The Decade and Beyond</h4>
         </div>
       </div>
     </div>
@@ -27,11 +29,13 @@
         {% for post in post_list %}
         <div class="card blog__slide text-center">
           <div class="blog__slide__img">
-            <img class="card-img rounded-0" src="{{ post.image.url }}" alt="">
+            <a href="{% url 'post_detail' post.slug  %}">
+              <img class="card-img rounded-0" src="{{ post.image.url }}" alt="">
+            </a>  
           </div>
           <div class="blog__slide__content">
             <a class="blog__slide__label" href="#">{{post.category}}</a>
-            <h3><a href="#">{{ post.title }}</a></h3>
+            <h3><a href="{% url 'post_detail' post.slug  %}">{{ post.title }}</a></h3>
             <p>{{post.created_on | naturaltime }}</p>
           </div>
         </div>
@@ -49,7 +53,9 @@
           {% for post in post_list %}
           <div class="single-recent-blog-post">
             <div class="thumb">
-              <img class="img-fluid" src="{{post.image.url}}" alt="">
+              <a href="{% url 'post_detail' post.slug  %}">
+                <img class="img-fluid" src="{{post.image.url}}" alt="">
+              </a>  
               <ul class="thumb-info">
                 <li><a href="#"><i class="ti-user"></i>{{ post.author }}</a></li>
                 <li><a href="#"><i class="ti-notepad"></i>{{ post.created_on}}</a></li>
@@ -60,7 +66,7 @@
               </ul>
             </div>
             <div class="details mt-20">
-              <a href="">
+              <a href="{% url 'post_detail' post.slug  %}">
                 <h3>{{ post.title }}</h3>
               </a>
               <p class="tag-list-inline">Category: <a href="#">{{ post.category }}</a></p>

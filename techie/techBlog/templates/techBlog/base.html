@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>G Blog - Home</title>
+  <title>{% block title %}{% endblock %}</title>
 	<link rel="icon" href="{% static 'techBlog/img/Fevicon.png' %}" type="image/png">
 
   <link rel="stylesheet" href="{% static 'techBlog/vendors/bootstrap/bootstrap.min.css' %}">
@@ -19,10 +19,21 @@
   <link rel="stylesheet" href="{% static 'techBlog/css/style.css' %}">
 </head>
 <body>
+
+  
   <!--================Header Menu Area =================-->
   {% include 'techBlog/navbar.html' %}
   <!--================Header Menu Area =================-->
   
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error{% else %}{{ message.tags|title }}{% endif %}!</strong> {{ message }}
+  </div>
+  {% endfor %}
+{% endif %}
+
  {% block content %}  {% endblock content %}
 
   <!--================ Start Footer Area =================-->

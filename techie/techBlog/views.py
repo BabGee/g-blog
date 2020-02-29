@@ -1,18 +1,24 @@
 from django.views import generic
-from .models import Post, Profile
-from .forms import CommentForm
-from django.shortcuts import render, get_object_or_404
+from .models import Post, Profile, Category
+from .forms import CommentForm, ContactForm
+from django.shortcuts import render, get_object_or_404, redirect
+from django.core.mail import send_mail, BadHeaderError
+from django.contrib import messages
+from django.http import HttpResponse
 
 
 class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by("-created_on")
+    #context['categories'] = Category.objects.all()
     template_name = "techBlog/index.html"
     paginate_by = 4
+    
 
 
 # class PostDetail(generic.DetailView):
 #     model = Post
 #     template_name = 'post_detail.html'
+
 
 
 def post_detail(request, slug):
@@ -42,11 +48,27 @@ def post_detail(request, slug):
             "comments": comments,
             "new_comment": new_comment,
             "comment_form": comment_form,
+            "post_list" : Post.objects.all()[:5],
         },
     )
 
-def about(request):
-    context = {
-        'babgee' : Profile.objects.filter(id=4).first() 
-    }
-    return render(request, 'techBlog/about.html', context)
+def contact(request):
+    form = ContactForm()
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = f"Message from {form.cleaned_data['name']}"
+            message = form.cleaned_data['message']
+            sender =form.cleaned_data['email']
+            recipients = ['geeray3@gmail.com']
+
+            try:
+               send_mail(subject, message, sender, recipients, fail_silently=True)
+            except BadHeaderError:
+               messages.warning(' Invalid Header Found')
+
+            messages.success(request,' Message sent')
+            return redirect('contact')
+                    
+
+    return render(request, 'techBlog/contact.html', {'form':form})
