@@ -60,7 +60,7 @@ def contact(request):
             subject = f"Message from {form.cleaned_data['name']}"
             message = form.cleaned_data['message']
             sender =form.cleaned_data['email']
-            recipients = ['geeray3@gmail.com']
+            recipients = ['startstartapp@gmail.com']
 
             try:
                send_mail(subject, message, sender, recipients, fail_silently=True)
